@@ -1,0 +1,18 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './app.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <>
+  {/* <Context.Provaider value={{
+    firebase,
+    auth,
+    firestore
+  }}> */}
+  <App className='app'/>
+  {/* </Context.Provaider> */}
+  </>
+);
+

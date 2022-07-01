@@ -1,0 +1,25 @@
+
+.addimg{
+  display: flex;
+}
+.imgicon{
+  font-size:70
+}
+.modalText{
+  text-align:center
+}
+.formcontrol{
+ display:flex;
+ margin:1rem
+}
+.textfield{
+  margin:4;
+  width:30rem
+}
+.field{
+  width:60rem;
+  margin-left:'10%'
+}
+.button{
+  margin:3
+}
