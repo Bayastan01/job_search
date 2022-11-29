@@ -10,7 +10,6 @@ function App() {
   return (
        <>
     <SearchContext.Provider value={{search,setSearch}}>
-
        <BrowserRouter>
          <Navbars/>
        </BrowserRouter>

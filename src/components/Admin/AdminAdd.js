@@ -1,6 +1,7 @@
 import { db } from "../../farebase";
 import { uid } from "uid";
 import { set, ref, onValue, remove, update } from "firebase/database";
+import {  Form} from 'react-bootstrap'
 import { useState, useEffect } from "react";
 import { Container } from "@mui/system";
 import Card from '@mui/material/Card';
@@ -14,6 +15,11 @@ import { OutlinedInput } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Sceleton from '../Header/Sceleton'
 import Jobs from '../Jobs'
+import { useDispatch,useSelector } from "react-redux";
+// import {addjobs} from '../../redux/Action'
+// import {addusername} from '../../redux/Action'
+import { Addusername, getJobs } from "../../redux/Addusername";
+import { GET_JOBS } from "../../redux/types";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -26,6 +32,7 @@ const style = {
   p: 4,
 };
 function AdminAdd() {
+  const dispatch = useDispatch()
   const [open, setOpen] =useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,10 +41,12 @@ function AdminAdd() {
   const [username, setUsername] = useState("");
   const [number, setNumber] = useState('');
   const [description, setDescription] = useState('');
+  const [option , setOption] = useState('')
   const [isEdit, setIsEdit] = useState(false);
   const [tempUuid, setTempUuid] = useState("");
   const [loding,setLoding] = useState(true);
 
+  const jobs = useSelector(s => s.Addusername.jobs)
   const handleTodoChange1 = (e) => {
     setName(e.target.value);
   };
@@ -50,6 +59,14 @@ function AdminAdd() {
   const handleTodoChange2 = (e) => {
     setDescription(e.target.value);
   };
+  const handleTodoChange5 = (e) => {
+    setOption(e.target.value);
+  };
+
+
+  useEffect(() => {
+    dispatch(getJobs(todos))
+  }, [todos])
 
   useEffect(() => {
     setLoding(true)
@@ -72,6 +89,7 @@ function AdminAdd() {
       name,
       username,
       number,
+      option,
       uuid,
     });
     setName("");
@@ -81,7 +99,6 @@ function AdminAdd() {
   };
 
   const handleDelete = (todo) => {
-    console.log(todo)
     remove(ref(db,`/${todo.uuid}`));
   };
 
@@ -95,9 +112,37 @@ function AdminAdd() {
    
   const searchs =  
   <Container>
-    {todos.map((todo,index) => (
+    {jobs.map((todo) => (
       <>
-        <Jobs todo={todos}/>
+      <Card sx={{ maxWidth: "100%" ,marginTop:'10%'}} >
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+        {todo.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+       {todo.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={handleOpen}><span>Показать контакты</span></Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+            {todo.username}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{color:'blue'}}>
+              {todo.number}
+            </Typography>
+          </Box>
+        </Modal>
+      </CardActions>
+    </Card>
+       
         <Button variant="contained" style={{backgroundColor:'red'}} onClick={() => handleDelete(todo)}>
           delete
         </Button>
@@ -114,9 +159,15 @@ function AdminAdd() {
         <TextField
         helperText="H: Офисянт, Дом, Машина, цена."
         id="demo-helper-text-aligned"
-        label="Назавние реклам"
+        label="Назавние реклам "
         value={name} onChange={handleTodoChange1}
       />
+      <Form.Select aria-label="Default select example" className={'mb-3'} onChange={handleTodoChange5} >
+                      <option value='0'>Все</option>
+                      <option value='1'>от 18 до 20лет</option>
+                      <option value="2">от 30 до 40лет</option>
+                      <option value="3">до 50лет</option>
+        </Form.Select>
         </Typography>
         <TextField
         label="Описание"
@@ -132,12 +183,12 @@ function AdminAdd() {
             '& > :not(style)': { m: 1 },
             flexWrap:'wrap'
           }}
-        >
+      >
       <TextField
-        helperText="Имя и номер клиента"
-        id="demo-helper-text-aligned"
-        label="ФИО"
-        value={username} onChange={handleTodoChange3}
+          helperText="Имя и номер клиента"
+          id="demo-helper-text-aligned"
+          label="ФИО"
+          value={username} onChange={handleTodoChange3}
       />
       <TextField
         helperText=" "

@@ -15,19 +15,21 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InputBase from '@mui/material/InputBase';
 import Container from '@mui/material/Container';
 import SearchIcon from '@mui/icons-material/Search';
-import {  alpha } from '@mui/material/styles';
-import { Routes, Route, Link } from "react-router-dom";
+import {alpha} from '@mui/material/styles';
+import {Routes,Route,Link} from "react-router-dom";
 import Jobs from '../Jobs'
+import Jobs1 from '../Jobs1'
+import Jobs2 from '../Jobs2'
+import Jobs3 from '../Jobs3'
 import Sity from '../Sity/Sity';
 import './navbar.css'
 import Admin from '../Admin/Admin';
 import AdminAdd from '../Admin/AdminAdd';
 import { SearchContext } from '../../App';
 
-const drawerWidth = 150;
 
 const openedMixin = (theme) => ({
-  width: drawerWidth,
+  width: 170,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -65,8 +67,8 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: 170,
+    width: `calc(100% - ${170}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -76,7 +78,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-    width: drawerWidth,
+    width: 170,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -146,10 +148,7 @@ export default function Navbars(props) {
   };
   
   const category = activeId > null ? `category=${activeId}`:'';
-  
-
   return (
-
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -168,7 +167,7 @@ export default function Navbars(props) {
           </IconButton>
           
           <Typography variant="h6" noWrap component="div">
-          <Link to='/' style={{ textDecoration: 'none' ,color:'white'}}>
+          <Link to='/jobs0' style={{ textDecoration: 'none' ,color:'white'}}>
            Job search
           </Link>
           </Typography>
@@ -209,14 +208,19 @@ export default function Navbars(props) {
 
       <Container>
           <Box component="main" sx={{ flexGrow: 1, p: 3 }} >
+
             <Routes>
-              <Route path="/" element={<Jobs/>} />
+              <Route path="/jobs0" element={<Jobs/>} />
+              <Route path="/jobs1" element={<Jobs1/>} />
+              <Route path="/jobs2" element={<Jobs2/>} />
+              <Route path="/jobs3" element={<Jobs3/>} />
               <Route path="/addproducts" element={<AdminAdd />} />
             </Routes>
 
             {/* <Box component="main" >
               <Footer/>
             </Box> */}
+
           </Box>
       </Container>
     </Box>

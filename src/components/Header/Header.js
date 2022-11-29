@@ -31,7 +31,7 @@
 //    <>
    
 //    <Container>
-//       <Jobs {...}/>
+//       <Jobs />
 //    </Container>
 //    </>
 //   )

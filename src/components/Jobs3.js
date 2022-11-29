@@ -23,7 +23,7 @@ const style = {
   p: 6,
 };
 
-export default function Jobs() {
+export default function Jobs3() {
   const [open, setOpen] =useState(false);
   const handleOpen = () => setOpen(true);
   const [todos, setTodos] = useState([]);
@@ -44,12 +44,13 @@ export default function Jobs() {
       }
     });
   }, []);
-console.log(jobs);
+const jobs3 = jobs.filter(word => word.option ==3 )
+console.log(jobs3);
 
   return (
     <div>
       {
-        jobs.map((jobs)=>{
+        jobs3.map((jobs)=>{
           return(
             <Card sx={{ maxWidth: "100%" ,marginTop:'10%'}} >
       <CardContent>
@@ -60,7 +61,8 @@ console.log(jobs);
        {jobs.description}
         </Typography>
       </CardContent>
-      <div style={{dispaly:'flex'}}>
+     
+          <div style={{dispaly:'flex'}}>
           <div  style={{marginLeft:'2%'}}>
              Имя: {jobs.username}
            </div>
